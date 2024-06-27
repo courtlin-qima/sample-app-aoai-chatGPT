@@ -11,7 +11,7 @@ param location string
 
 param appServicePlanName string = ''
 param backendServiceName string = ''
-param resourceGroupName string = ''
+param resourceGroupName string = '' // Set in main.parameters.json
 
 param searchServiceName string = ''
 param searchServiceResourceGroupName string = ''
