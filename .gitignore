@@ -58,3 +58,4 @@ venvs/
 .venv
 .env
 .azure/
+data
