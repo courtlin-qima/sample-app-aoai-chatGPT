@@ -53,6 +53,8 @@ coverage.xml
 # Project specific
 frontend/node_modules
 static
+venvs
+venvs/
 .venv
 .env
 .azure/
