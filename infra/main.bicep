@@ -61,7 +61,7 @@ param principalId string = ''
 
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
-var tags = { 'azd-env-name': environmentName }
+var tags = { 'azd-env-name': environmentName , 'project': 'ai', 'business-unit': 'cclabs', 'team': 'data-team' }
 
 // Organize resources in a resource group
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
