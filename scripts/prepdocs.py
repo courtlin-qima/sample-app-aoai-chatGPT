@@ -1,8 +1,9 @@
 import argparse
 import dataclasses
+import os
 import time
-
 from tqdm import tqdm
+
 from azure.identity import AzureDeveloperCliCredential
 from azure.core.credentials import AzureKeyCredential
 from azure.search.documents.indexes import SearchIndexClient
@@ -127,15 +128,27 @@ def validate_index(index_name, index_client):
 
 
 def create_and_populate_index(
-    index_name, index_client, search_client, form_recognizer_client, azure_credential, embedding_endpoint
+    index_name,
+    index_client,
+    search_client,
+    form_recognizer_client,
+    azure_credential,
+    embedding_endpoint,
+    documents_folder_path="./data",
 ):
+    if not os.path.isdir(documents_folder_path):
+        raise ValueError(
+            f"Input 'documents_folder_path' value '{documents_folder_path}' does not "
+            "refer to an existing directory."
+        )
+    
     # create or update search index with compatible schema
     create_search_index(index_name, index_client)
 
     # chunk directory
     print("Chunking directory...")
     result = chunk_directory(
-        "./data",
+        documents_folder_path,
         form_recognizer_client=form_recognizer_client,
         use_layout=True,
         ignore_errors=False,
@@ -201,6 +214,11 @@ if __name__ == "__main__":
         required=False,
         help="Optional. Use this OpenAI endpoint to generate embeddings for the documents",
     )
+    parser.add_argument(
+        "--documentsfolderpath",
+        required=False,
+        help="Optional. Use this to specify the path to the folders where the documents to ingest are located.",
+    )
     args = parser.parse_args()
 
     # Use the current user identity to connect to Azure services unless a key is explicitly set for any of them
@@ -231,6 +249,12 @@ if __name__ == "__main__":
         credential=formrecognizer_creds,
     )
     create_and_populate_index(
-        args.index, index_client, search_client, form_recognizer_client, azd_credential, args.embeddingendpoint
+        args.index,
+        index_client,
+        search_client,
+        form_recognizer_client,
+        azd_credential,
+        args.embeddingendpoint,
+        documents_folder_path=args.documentsfolderpath,
     )
     print("Data preparation for index", args.index, "completed")

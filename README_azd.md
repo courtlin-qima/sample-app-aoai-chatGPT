@@ -33,7 +33,7 @@ all resources from scratch by following these steps:
     * For the target location, the regions that currently support the models used in this sample are **East US** or **South Central US**. For an up-to-date list of regions and models, check [here](https://learn.microsoft.com/en-us/azure/cognitive-services/openai/concepts/models)
 1. After the application has been successfully deployed you will see a URL printed to the console.  Click that URL to interact with the application in your browser.
     > NOTE: It may take a minute for the application to be fully deployed. If you see a "Python Developer" welcome screen, then wait a minute and refresh the page.
-1. You need to manually run the script needed in order to build the search index based on files in the `./data` folder which is supposed to exist in the root. To do that, run `./script/perform_data_ingestion.ps1` or `./script/perform_data_ingestion.sh`.
+1. You need to manually run the script needed in order to build the search index based on files in the `./data` folder which is supposed to exist in the root. To do that, run `./script/perform_data_ingestion.ps1` or `./script/perform_data_ingestion.sh`. Note that with the `./script/perform_data_ingestion.sh`, you are able to specify the folder from which to perform the data ingestion, with providing its path when calling the script (ex: `./script/perform_data_ingestion.sh /path/to/documents/folder`).
 
 ### Using existing resources:
 

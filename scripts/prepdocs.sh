@@ -1,5 +1,14 @@
- #!/bin/sh
+#!/bin/sh
 
+# Specify in which folder documents are located, if the info has been provided.
+# Else, use the default './data' value, which was implicitely used, up until now.
+DOCUMENTS_FOLDER_PATH="./data";
+if [ ! -z $1 ]; then
+    DOCUMENTS_FOLDER_PATH=$1;
+fi
+echo "Will ingest document(s) location in '$DOCUMENTS_FOLDER_PATH'.";
+
+# Load env variables
 . ./scripts/loadenv.sh
 
 # Cf here for structure of embedding creation api url: https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#embeddings
@@ -11,4 +20,5 @@ echo 'Running "prepdocs.py"'
     --index "$AZURE_SEARCH_INDEX" \
     --formrecognizerservice "$AZURE_FORMRECOGNIZER_SERVICE" \
     --tenantid "$AZURE_TENANT_ID" \
-    --embeddingendpoint $EMBEDDING_ENDPOINT
+    --embeddingendpoint $EMBEDDING_ENDPOINT \
+    --documentsfolderpath $DOCUMENTS_FOLDER_PATH
