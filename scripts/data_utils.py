@@ -35,7 +35,7 @@ FILE_FORMAT_DICT = {
         "htm": "html",
         "py": "python",
         "pdf": "pdf",
-        "docx": "docx",
+        # "docx": "docx",  # "docx" is not supported anymore through the use of SDKs, apparently. Cf https://stackoverflow.com/questions/75087424/azure-form-recognizer-mainline-support-for-office-documents
         "pptx": "pptx"
     }
 
@@ -738,8 +738,7 @@ def chunk_content(
         else:
             file_format = _get_file_format(file_name, extensions_to_process)
             if file_format is None:
-                raise Exception(
-                    f"{file_name} is not supported")
+                raise UnsupportedFormatError(f"Format '{file_format}' of '{file_name}' is not supported")
 
         chunked_context = chunk_content_helper(
             content=content,
@@ -822,10 +821,10 @@ def chunk_file(
                 chunks=[], total_files=1, num_unsupported_format_files=1
             )
         else:
-            raise UnsupportedFormatError(f"{file_name} is not supported")
+            raise UnsupportedFormatError(f"Format '{file_format}' of '{file_name}' is not supported")
 
     cracked_pdf = False
-    if file_format in ["pdf", "docx", "pptx"]:
+    if file_format in ["pdf", "pptx"]:  # "docx" is not supported anymore through the use of SDKs, apparently. Cf https://stackoverflow.com/questions/75087424/azure-form-recognizer-mainline-support-for-office-documents
         if form_recognizer_client is None:
             raise UnsupportedFormatError("form_recognizer_client is required for pdf files")
         content = extract_pdf_content(file_path, form_recognizer_client, use_layout=use_layout)
@@ -887,7 +886,7 @@ def process_file(
 
         result = chunk_file(
             file_path,
-            ignore_errors=ignore_errors,
+            ignore_errors=False,
             num_tokens=num_tokens,
             min_chunk_size=min_chunk_size,
             url=url_path,
@@ -992,13 +991,18 @@ def chunk_directory(
     skipped_chunks = 0
 
     all_files_directory = get_files_recursively(directory_path)
-    files_to_process = [file_path for file_path in all_files_directory if os.path.isfile(file_path)]
+    files_to_process = [
+        file_path
+        for file_path in all_files_directory
+        if os.path.isfile(file_path) and os.path.getsize(file_path) > 0
+    ]
     print(f"Total files to process={len(files_to_process)} out of total directory size={len(all_files_directory)}")
 
 
     if njobs==1:
         print("Single process to chunk and parse the files. --njobs > 1 can help performance.")
         for file_path in tqdm(files_to_process):
+            print(f"Processing file located at '{file_path}'...")
             total_files += 1
             result, is_error = process_file(file_path=file_path,directory_path=directory_path, ignore_errors=ignore_errors,
                                        num_tokens=num_tokens,
