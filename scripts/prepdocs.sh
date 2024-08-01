@@ -10,6 +10,7 @@ echo "Will ingest document(s) location in '$DOCUMENTS_FOLDER_PATH'.";
 
 # Load env variables
 . ./scripts/loadenv.sh
+. ./scripts/setupvenv.sh
 
 # Cf here for structure of embedding creation api url: https://learn.microsoft.com/en-us/azure/ai-services/openai/reference#embeddings
 EMBEDDING_ENDPOINT="$AZURE_OPENAI_ENDPOINT""openai/deployments/$AZURE_OPENAI_EMB_DEPLOYMENT/embeddings?api-version=2023-05-15"

@@ -1,9 +1,9 @@
 . ./scripts/loadenv.ps1
 
-$venvPythonPath = "./venvs/.venv/scripts/python.exe"
+$venvPythonPath = "./.venv/scripts/python.exe"
 if (Test-Path -Path "/usr") {
   # fallback to Linux venv path
-  $venvPythonPath = "./venvs/.venv/bin/python"
+  $venvPythonPath = "./.venv/bin/python"
 }
 
 Write-Host 'Running "auth_update.py"'

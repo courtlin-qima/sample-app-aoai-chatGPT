@@ -21,6 +21,7 @@ fi
 
 cd ..
 . ./scripts/loadenv.sh
+. ./scripts/setupvenv.sh
 
 echo ""
 echo "Starting backend"
