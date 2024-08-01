@@ -1,3 +1,6 @@
+#!/bin/sh
+set -e
+
 while getopts ":s:o:a:" opt; do
   case $opt in
     s) search_service_resource_id="$OPTARG"

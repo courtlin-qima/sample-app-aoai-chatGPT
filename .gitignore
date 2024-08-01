@@ -59,3 +59,4 @@ venvs/
 .env
 .azure/
 data
+tmp_deploy_project

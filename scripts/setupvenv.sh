@@ -1,3 +1,6 @@
+#!/bin/sh
+set -e
+
 echo 'Creating Python virtual environment ".venv" in root'
 python3.10 -m venv .venv
 

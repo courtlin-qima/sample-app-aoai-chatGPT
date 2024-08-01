@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 # Specify in which folder documents are located, if the info has been provided.
 # Else, use the default './data' value, which was implicitely used, up until now.

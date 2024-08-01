@@ -1,3 +1,6 @@
+#!/bin/sh
+set -e
+
 # Only load env from azd if azd command and azd environment exist
 if not command -v azd &> /dev/null; then
     echo "azd command not found, skipping .env file load"

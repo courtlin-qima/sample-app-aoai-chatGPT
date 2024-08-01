@@ -1,4 +1,5 @@
  #!/bin/sh
+set -e
 
 . ./scripts/loadenv.sh
 . ./scripts/setupvenv.sh
