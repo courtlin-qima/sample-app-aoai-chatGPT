@@ -289,6 +289,7 @@ output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
 
+output BACKEND_SERVICE_NAME string = backend.outputs.name
 output BACKEND_URI string = backend.outputs.uri
 
 // search

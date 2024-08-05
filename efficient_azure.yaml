@@ -28,7 +28,7 @@ hooks:
         continueOnError: false
       posix:
         shell: sh
-        run: ./scripts/auth_update.sh;
+        run: ./scripts/update_auth_and_app_setting.sh;
         interactive: true
         continueOnError: false
 
