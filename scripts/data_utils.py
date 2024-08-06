@@ -40,6 +40,7 @@ FILE_FORMAT_DICT = {
     }
 
 RETRY_COUNT = 5
+RETRY_TIMEOUT_DURATION = 30
 
 SENTENCE_ENDINGS = [".", "!", "?"]
 WORDS_BREAKS = list(reversed([",", ";", ":", " ", "(", ")", "[", "]", "{", "}", "\t", "\n"]))
@@ -652,12 +653,12 @@ def get_embedding(text, embedding_model_endpoint=None, embedding_model_key=None,
         else:
             api_key = key
 
-        client = AzureOpenAI(api_version=api_version, azure_endpoint=base_url, azure_ad_token=api_key)
+        client = AzureOpenAI(api_version=api_version, azure_endpoint=base_url, azure_deployment=deployment_id, azure_ad_token=api_key)
         embeddings = client.embeddings.create(model=deployment_id, input=text)
         return embeddings.dict()['data'][0]['embedding']
 
     except Exception as e:
-        raise Exception(f"Error getting embeddings with endpoint={endpoint} with error={e}")
+        raise Exception(f"Error getting embeddings with endpoint={endpoint} with error={e}.\n\nOriginal exception: {e}.")
 
 
 def chunk_content_helper(
@@ -752,14 +753,16 @@ def chunk_content(
         for chunk, chunk_size, doc in chunked_context:
             if chunk_size >= min_chunk_size:
                 if add_embeddings:
+                    a = None
                     for _ in range(RETRY_COUNT):
                         try:
                             doc.contentVector = get_embedding(chunk, azure_credential=azure_credential, embedding_model_endpoint=embedding_endpoint)
                             break
-                        except:
-                            time.sleep(30)
+                        except Exception as e:
+                            a = e
+                            time.sleep(RETRY_TIMEOUT_DURATION)
                     if doc.contentVector is None:
-                        raise Exception(f"Error getting embedding for chunk={chunk}")
+                        raise Exception(f"Error getting embedding for chunk={chunk}:\n\nOriginal exception: {a}")
                     
 
                 chunks.append(

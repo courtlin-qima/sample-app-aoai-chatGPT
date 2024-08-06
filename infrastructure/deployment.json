@@ -237,7 +237,7 @@
                 "description": "Azure Search Strictness"
             }
         },
-        "AzureOpenAIEmbeddingName": {
+        "AzureOpenAIEmbeddingDeploymentName": {
             "type": "string",
             "defaultValue": "",
             "metadata": {
@@ -497,8 +497,8 @@
                             "value": "[parameters('AzureSearchStrictness')]"
                         },
                         {
-                            "name": "AZURE_OPENAI_EMBEDDING_NAME",
-                            "value": "[parameters('AzureOpenAIEmbeddingName')]"
+                            "name": "AZURE_OPENAI_EMB_DEPLOYMENT",
+                            "value": "[parameters('AzureOpenAIEmbeddingDeploymentName')]"
                         },
                         {
                             "name": "SCM_DO_BUILD_DURING_DEPLOYMENT",

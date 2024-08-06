@@ -102,7 +102,7 @@ AZURE_OPENAI_STREAM = os.environ.get("AZURE_OPENAI_STREAM", "true")
 AZURE_OPENAI_MODEL_NAME = os.environ.get("AZURE_OPENAI_MODEL_NAME", "gpt-35-turbo-16k") # Name of the model, e.g. 'gpt-35-turbo-16k' or 'gpt-4'
 AZURE_OPENAI_EMBEDDING_ENDPOINT = os.environ.get("AZURE_OPENAI_EMBEDDING_ENDPOINT")
 AZURE_OPENAI_EMBEDDING_KEY = os.environ.get("AZURE_OPENAI_EMBEDDING_KEY")
-AZURE_OPENAI_EMBEDDING_NAME = os.environ.get("AZURE_OPENAI_EMBEDDING_NAME", "")
+AZURE_OPENAI_EMB_DEPLOYMENT = os.environ.get("AZURE_OPENAI_EMB_DEPLOYMENT", "")
 
 # CosmosDB Mongo vcore vector db Settings
 AZURE_COSMOSDB_MONGO_VCORE_CONNECTION_STRING = os.environ.get("AZURE_COSMOSDB_MONGO_VCORE_CONNECTION_STRING")  #This has to be secure string
@@ -459,10 +459,10 @@ def get_configured_data_source():
 
     if "vector" in query_type.lower() and DATASOURCE_TYPE != "AzureMLIndex":
         embeddingDependency = {}
-        if AZURE_OPENAI_EMBEDDING_NAME:
+        if AZURE_OPENAI_EMB_DEPLOYMENT:
             embeddingDependency = {
                 "type": "deployment_name",
-                "deployment_name": AZURE_OPENAI_EMBEDDING_NAME
+                "deployment_name": AZURE_OPENAI_EMB_DEPLOYMENT
             }
         elif AZURE_OPENAI_EMBEDDING_ENDPOINT and AZURE_OPENAI_EMBEDDING_KEY:
             embeddingDependency = {

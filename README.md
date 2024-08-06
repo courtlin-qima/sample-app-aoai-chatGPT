@@ -70,7 +70,7 @@ Please see the [section below](#add-an-identity-provider) for important informat
     - `AZURE_SEARCH_QUERY_TYPE`
     - `AZURE_SEARCH_PERMITTED_GROUPS_COLUMN`
     - `AZURE_SEARCH_STRICTNESS`
-    - `AZURE_OPENAI_EMBEDDING_NAME`
+    - `AZURE_OPENAI_EMB_DEPLOYMENT`
 
 3. Start the app with `start.cmd`. This will build the frontend, install backend dependencies, and then start the app. Or, just run the backend in debug mode using the VSCode debug configuration in `.vscode/launch.json`.
 4. You can see the local running app at http://127.0.0.1:50505.
@@ -155,7 +155,6 @@ Now, you should be able to see logs from your app by viewing "Log stream" under 
 ### Configuring vector search
 When using your own data with a vector index, ensure these settings are configured on your app:
 - `AZURE_SEARCH_QUERY_TYPE`: can be `vector`, `vectorSimpleHybrid`, or `vectorSemanticHybrid`,
-- `AZURE_OPENAI_EMBEDDING_NAME`: the name of your Ada (text-embedding-ada-002) model deployment on your Azure OpenAI resource.
 - `AZURE_SEARCH_VECTOR_COLUMNS`: the vector columns in your index to use when searching. Join them with `|` like `contentVector|titleVector`.
 
 ### Changing Citation Display
@@ -221,7 +220,7 @@ Note: settings starting with `AZURE_SEARCH` are only needed when using Azure Ope
 |AZURE_OPENAI_SYSTEM_MESSAGE|You are an AI assistant that helps people find information.|A brief description of the role and tone the model should use|
 |AZURE_OPENAI_PREVIEW_API_VERSION|2024-02-15-preview|API version when using Azure OpenAI on your data|
 |AZURE_OPENAI_STREAM|True|Whether or not to use streaming for the response|
-|AZURE_OPENAI_EMBEDDING_NAME||The name of your embedding model deployment if using vector search.
+|AZURE_OPENAI_EMB_DEPLOYMENT||The name of your embedding model deployment if using vector search.
 |UI_TITLE|Contoso| Chat title (left-top) and page title (HTML)
 |UI_LOGO|| Logo (left-top). Defaults to Contoso logo. Configure the URL to your logo image to modify.
 |UI_CHAT_LOGO|| Logo (chat window). Defaults to Contoso logo. Configure the URL to your logo image to modify.
