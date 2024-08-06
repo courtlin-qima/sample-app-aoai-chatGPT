@@ -56,12 +56,25 @@ param authClientSecret string
 // Used for Cosmos DB
 param cosmosAccountName string = ''
 
+// Required tag value in order to create Azure resources in the frame of QIMA projects
+@minLength(1)
+param qimaProject string
+@minLength(1)
+param qimaBusinessUnit string
+@minLength(1)
+param qimaTeam string
+
 @description('Id of the user or app to assign application roles')
 param principalId string = ''
 
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
-var tags = { 'azd-env-name': environmentName , 'project': 'ai', 'business-unit': 'cclabs', 'team': 'data-team' }
+var tags = {
+  'azd-env-name': environmentName
+  'project': qimaProject
+  'business-unit': qimaBusinessUnit
+  'team': qimaTeam
+}
 
 // Organize resources in a resource group
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -285,10 +298,17 @@ module docPrepResources 'docprep.bicep' = {
     formRecognizerSkuName: !empty(formRecognizerSkuName) ? formRecognizerSkuName : 'S0'
   }
 }
+
+// Output env variables
+// General
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
+output QIMA_PROJECT string = qimaProject
+output QIMA_BUSINESS_UNIT string = qimaBusinessUnit
+output QIMA_TEAM string = qimaTeam
 
+// Backend
 output BACKEND_SERVICE_NAME string = backend.outputs.name
 output BACKEND_URI string = backend.outputs.uri
 

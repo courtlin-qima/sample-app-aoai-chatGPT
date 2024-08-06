@@ -2,6 +2,15 @@
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "qimaProject": {
+      "value": "${QIMA_PROJECT}"
+    },
+    "qimaBusinessUnit": {
+      "value": "${QIMA_BUSINESS_UNIT}"
+    },
+    "qimaTeam": {
+      "value": "${QIMA_TEAM}"
+    },
     "environmentName": {
       "value": "${AZURE_ENV_NAME}"
     },
