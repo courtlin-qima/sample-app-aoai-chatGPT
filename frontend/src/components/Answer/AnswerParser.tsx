@@ -37,6 +37,8 @@ export function parseAnswer(answer: AskResponse): ParsedAnswer {
           answerText = answerText.replaceAll(link, ` ^${++citationReindex}^ `);
           citation.id = citationIndex; // original doc index to de-dupe
           citation.reindex_id = citationReindex.toString(); // reindex from 1 for display
+          citation.page = (citation.filepath ? citation.filepath.split("#page=").pop() : null) // define page nb for filepath value
+          citation.filepath = (citation.filepath ? citation.filepath.split("#page=")[0] : citation.filepath) // remove potentially existing page nb data
           filteredCitations.push(citation);
         }
     })

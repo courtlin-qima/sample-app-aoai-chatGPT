@@ -786,6 +786,8 @@ const Chat = () => {
                             <div>{activeCitation.title ? activeCitation.title : "<undefined>"}</div>
                             <h6 className={styles.citationPanelTitle} tabIndex={0} >Original document name:</h6>
                             <div>{activeCitation.filepath ? activeCitation.filepath.split("/").pop() : "<undefined>"}</div>
+                            <h6 className={styles.citationPanelTitle} tabIndex={0} >Original document page:</h6>
+                            <div>{activeCitation.page ? activeCitation.page : "<undefined>"}</div>
                             <h6 className={styles.citationPanelTitle} tabIndex={0} >Content:</h6>
                             <div tabIndex={0}>
                                 <ReactMarkdown

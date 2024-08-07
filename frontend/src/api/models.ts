@@ -12,6 +12,7 @@ export type Citation = {
     id: string;
     title: string | null;
     filepath: string | null;
+    page: string | null | undefined;
     url: string | null;
     metadata: string | null;
     chunk_id: string | null;
